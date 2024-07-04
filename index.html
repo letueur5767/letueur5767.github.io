@@ -1,1 +1,218 @@
-<h1>test</h1>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Définitions pour maman</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 800px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .input-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin-right: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input {
+            flex-grow: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        .search-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .search-button:hover {
+            background-color: #0056b3;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            border-bottom: 1px solid #1f2bb0;
+            margin-top: 20px;
+        }
+
+        .tabs button {
+            padding: 10px;
+            background-color: #f4f4f9;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .tabs button.active {
+            border-bottom: 2px solid #007bff;
+            font-weight: bold;
+        }
+
+        .tab-content {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content p {
+            margin-bottom: 10px;
+        }
+
+        .tab-content .link-container {
+            margin-top: 10px;
+        }
+
+        .tab-content .open-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+
+        .tab-content .open-link:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Définitions</h1>
+        <div class="input-container">
+            <label for="word-input">Entrez un mot :</label>
+            <input type="text" id="word-input">
+            <div class="link-container">
+                <button id="search-button" data-url="" class="search-button">Rechercher</button>
+            </div>
+            
+        </div>
+        <div class="tabs">
+           <!--
+             <button data-tab="larousse" class="active">Larousse</button>
+            <button data-tab="robert">Le Robert</button>
+            <button data-tab="tlfi">TLFi</button>
+            <button data-tab="littre">Littré</button>
+        </div>
+        <div id="larousse" class="tab-content active">
+            <p>Définition Larousse</p>
+            <div class="link-container">
+                <span class="open-link" data-url="">Ouvrir Larousse</span>
+            </div>
+        </div>
+        <div id="robert" class="tab-content">
+            <p>Définition Le Robert</p>
+            <div class="link-container">
+                <span class="open-link" data-url="">Ouvrir Le Robert</span>
+            </div>
+        </div>
+        <div id="tlfi" class="tab-content">
+            <p>Définition TLFi</p>
+            <div class="link-container">
+                <span class="open-link" data-url="">Ouvrir TLFi</span>
+            </div>
+        </div>
+        <div id="littre" class="tab-content">
+            <p>Définition Littré</p>
+            <div class="link-container">
+                <span class="open-link" data-url="">Ouvrir Littré</span>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div id="larousse" class="tab-content active">
+        <div class="link-container">
+            <span class="open-link" data-url="">Ouvrir Les dictionnaires</span>
+        </div>
+    </div>
+    -->
+
+    <script>
+        const tabs = document.querySelectorAll('.tabs button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const openLinks = document.querySelectorAll('.open-link');
+        const searchButton = document.getElementById('search-button');
+        const wordInput = document.getElementById('word-input');
+
+        searchButton.addEventListener('click', function () {
+            const word = wordInput.value.trim();
+            if (!word) {
+                alert('Veuillez entrer un mot.');
+                return;
+            }
+
+            document.getElementById('larousse').querySelector('.open-link').setAttribute('data-url', `https://www.larousse.fr/dictionnaires/francais/${word}`);
+            document.getElementById('robert').querySelector('.open-link').setAttribute('data-url', `https://dictionnaire.lerobert.com/definition/${word}`);
+            document.getElementById('tlfi').querySelector('.open-link').setAttribute('data-url', `https://www.le-tresor-de-la-langue.fr/definition/${word}`);
+            document.getElementById('littre').querySelector('.open-link').setAttribute('data-url', `https://www.littre.org/definition/${word}`);
+        });
+
+        openLinks.forEach(link => {
+            link.addEventListener('click', function () {
+                const url = this.getAttribute('data-url');
+                if (!url) {
+                    alert('Veuillez entrer un mot et effectuer une recherche.');
+                } else {
+                    window.open(url, '_blank');
+                }
+            });
+        });
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function () {
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(tc => tc.classList.remove('active'));
+                this.classList.add('active');
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
